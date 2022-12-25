@@ -96,15 +96,15 @@ def docker_kompose(file_dir=os.getcwd(),
                    daemonset=False,
                    statefulset=False):
     # Conversion types
-    if json_conversion is not False:
+    if bool(json_conversion): #Maybe try bool() here?
         run_kompose_json(file_dir)
-    elif helm is not False:
+    elif bool(helm):
         run_kompose_helm(file_dir)
-    elif repc is not False:
+    elif bool(repc):
         run_kompose_repcontroller(file_dir, repc_replicas)
-    elif daemonset is not False:
+    elif bool(daemonset):
         run_kompose_daemonset(file_dir)
-    elif statefulset is not False:
+    elif bool(statefulset):
         run_kompose_statefulset(file_dir)
     else:
         run_kompose(file_dir)
