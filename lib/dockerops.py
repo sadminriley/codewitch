@@ -1,13 +1,16 @@
 #!/usr/bin/env python3.11
 import docker
 import os
-from git import Repo
 from decouple import config
+from git import Repo
+from komposer import run_kompose, run_kompose_json, run_kompose_helm, run_kompose_repcontroller, run_kompose_daemonset, run_kompose_statefulset
+
 
 
 # Check for choice of dockerhub, image registry, or git source for the app being built.
 # This creates an infrastructure of their choice(AWS,Azure,GCP,ETC) from the front-end with this script that runs anywhere(in a Docker container, of course!) on THEIR infra or ours, and runs using  mostly
 # docker and a config file with decouple.
+# THIS SCRIPT MUST BE RUN AS ROOT!~!!!!!!!@!@!!@#$@#$@ AHH!! ROOT
 
 '''
 Must have .env file for python-decouple
@@ -85,8 +88,29 @@ def run_docker_detach(hub_image):
 
 ## Consume docker compose stack with kompose.io and run it on the desired platform
 
-def docker_kompose(composefile):
-    Komposer(composefile)
+def docker_kompose(file_dir=os.getcwd(),
+                   json_conversion=False,
+                   helm=False,
+                   repc=False,
+                   repc_replicas=1,
+                   daemonset=False,
+                   statefulset=False):
+    # Conversion types
+    if json_conversion is not False:
+        run_kompose_json(file_dir)
+    elif helm is not False:
+        run_kompose_helm(file_dir)
+    elif repc is not False:
+        run_kompose_repcontroller(file_dir, repc_replicas)
+    elif daemonset is not False:
+        run_kompose_daemonset(file_dir)
+    elif statefulset is not False:
+        run_kompose_statefulset(file_dir)
+    else:
+        run_kompose(file_dir)
+
+
+
 
 
 

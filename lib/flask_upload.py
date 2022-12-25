@@ -21,19 +21,6 @@ def allowed_file(filename):
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 
-
-def install_kompose():
-    platform_type = platform.uname()
-    if 'Linux' in platform_type:
-        if 'Ubuntu' in platform_type:
-            subprocess.Popen("install_kompose_deb.sh", shell=True) # Installs 'Most' Linux distros
-        elif 'Fedora' in platform_type:
-            subprocess.Popen("install_kompose_redhat.sh", shell=True) # installs via DNF pkg manager
-        else:
-            print('Closing....\nunsupported platform type!')
-            sys.exit(1)
-
-
 # Something could be done here to make it accept requests from JSON??? or something
 @app.route('/upload', methods=['GET', 'POST'])
 def upload_file():
@@ -61,16 +48,6 @@ def upload_file():
       <input type=submit value=Upload>
     </form>
     '''
-
-
-def run_kompose(file_name):
-    # Log the run command output
-    try:
-        subprocess.run(["kompose", "konvert"])
-    except subprocess.CalledProcessError as e:
-        print(e.output)
-
-
 
 
 
