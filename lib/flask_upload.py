@@ -11,9 +11,10 @@ UPLOAD_FOLDER = './'
 ALLOWED_EXTENSIONS = {'yml', 'yaml'}
 
 
-# Init Flask app and settings
+# Init Flask app and settings. Set max upload size to 16MB
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+app.config['MAX_CONTENT_LENGTH'] = 16 * 1000 * 1000
 
 
 def allowed_file(filename):
