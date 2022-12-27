@@ -1,6 +1,8 @@
 #!/usr/bin/env python3.11
 import docker
 import os
+import uuid
+from logger import Logger
 from decouple import config
 from git import Repo
 from komposer import run_kompose, run_kompose_json, run_kompose_helm, run_kompose_repcontroller, run_kompose_daemonset, run_kompose_statefulset
@@ -26,6 +28,9 @@ LANG=python, node, ruby, php
 # The None values for the decouple config .env were so pycharm ignores warnings
 
 # config file stuff
+
+logger = Logger(__name__)
+
 
 
 if config('GIT_URL') is not None:
@@ -84,6 +89,22 @@ def run_docker_detach(hub_image):
     print('Some Logging stuff to show detached containers')
 
 
+# Create unique log id for log tags
+unique_log_id = str(uuid.uuid4().int & (1 << 64) - 1)
+
+
+def log_info(func_name, tags=None):
+    logging.info(func_name, tags)
+
+def log_error(func_name, tags=None):
+    logging.error(func_name, tags)
+
+
+
+def run_docker_detach(hub_image):
+    log = client.containers.run(hub_image, detach=True)
+    for item in log:
+        log_info(item)
 
 
 ## Consume docker compose stack with kompose.io and run it on the desired platform
