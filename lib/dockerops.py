@@ -2,7 +2,7 @@
 import docker
 import os
 import uuid
-from logger import Logger
+from logger import logger
 from decouple import config
 from git import Repo
 from komposer import run_kompose, run_kompose_json, run_kompose_helm, run_kompose_repcontroller, run_kompose_daemonset, run_kompose_statefulset
@@ -29,7 +29,7 @@ LANG=python, node, ruby, php
 
 # config file stuff
 
-logger = Logger(__name__)
+log_init = logger(__name__)
 
 
 
@@ -93,10 +93,11 @@ def run_docker_detach(hub_image):
 unique_log_id = str(uuid.uuid4().int & (1 << 64) - 1)
 
 
-def log_info(func_name, tags=None):
+def log_info(func_name, tags=None) -> None:
     logging.info(func_name, tags)
 
-def log_error(func_name, tags=None):
+
+def log_error(func_name, tags=None) -> None:
     logging.error(func_name, tags)
 
 
