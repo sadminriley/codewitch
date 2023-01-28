@@ -2,19 +2,19 @@
 import docker
 import os
 import uuid
-from logger import logger
+import logging
 from decouple import config
 from git import Repo
 from komposer import run_kompose, run_kompose_json, run_kompose_helm, run_kompose_repcontroller, run_kompose_daemonset, run_kompose_statefulset
 
 
-
-# Check for choice of dockerhub, image registry, or git source for the app being built.
-# This creates an infrastructure of their choice(AWS,Azure,GCP,ETC) from the front-end with this script that runs anywhere(in a Docker container, of course!) on THEIR infra or ours, and runs using  mostly
-# docker and a config file with decouple.
-# THIS SCRIPT MUST BE RUN AS ROOT!~!!!!!!!@!@!!@#$@#$@ AHH!! ROOT
-
 '''
+ Check for choice of dockerhub, image registry, or git source for the app being built.
+ This creates an infrastructure of choice(AWS,Azure,GCP,ETC) from the front-end with this script that runs anywhere(in a Docker container, of course!) on your infrastructure or a remote source, and runs using  mostly
+ docker and a config file with decouple.
+ This script MUST be run as root!
+
+
 Must have .env file for python-decouple
 APP_SOURCE=dockerhub,registry,git
 HUB_IMAGE=someurl/repo
@@ -22,14 +22,12 @@ HUB_URL
 GIT_URL=gitgud.com/baebaz.git
 LANG=python, node, ruby, php
 
-
 '''
 
-# The None values for the decouple config .env were so pycharm ignores warnings
+# The None values for the decouple config .env were so vim/pycharm ignores warnings
 
 # config file stuff
 
-log_init = logger(__name__)
 
 
 
@@ -46,14 +44,6 @@ if config('HUB_IMAGE') is not None:
 
 
 
-'''
-if config('APP_SOURCE') == 'dockerhub':
-    HUB_URL = config('HUB_URL') # Docker hub image pull url
-elif config('APP_SOURCE') == 'registry':
-    HUB_URL = config('HUB_URL')
-else:
-    GIT_URL = config('GIT_URL')
-'''
 # Connect to the docker client
 
 client = docker.DockerClient(base_url='unix://var/run/docker.sock')
@@ -136,9 +126,8 @@ def docker_kompose(file_dir=os.getcwd(),
 
 
 
-
-
 pull_docker(HUB_IMAGE)
+
 
 run_docker(HUB_IMAGE)
 

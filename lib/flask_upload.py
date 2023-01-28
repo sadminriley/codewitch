@@ -7,7 +7,7 @@ from werkzeug.utils import secure_filename
 
 
 # Only allow yml/yaml type uploads
-UPLOAD_FOLDER = './'
+UPLOAD_FOLDER = os.getcwd()
 ALLOWED_EXTENSIONS = {'yml', 'yaml'}
 
 
