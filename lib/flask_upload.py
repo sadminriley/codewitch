@@ -32,7 +32,7 @@ def upload_file():
             return redirect(request.url)
         file = request.files['file']
         # If the user does not select a file, the browser submits an
-        # empty file without a filename.
+        # empty file without a filename. Fix this later.
         if file.filename == '':
             flash('No selected file')
             return redirect(request.url)

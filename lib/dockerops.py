@@ -108,7 +108,7 @@ def docker_kompose(file_dir=os.getcwd(),
                    daemonset=False,
                    statefulset=False):
     # Conversion types
-    if bool(json_conversion): #Maybe try bool() here?
+    if bool(json_conversion):
         run_kompose_json(file_dir)
     elif bool(helm):
         run_kompose_helm(file_dir)
