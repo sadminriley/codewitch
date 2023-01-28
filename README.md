@@ -15,3 +15,12 @@ coding languages, and is compatible with AWS/GCP/Azure.
 It will eventually do many other things like create infrastructure based on resource crawling, collect metrics, and report data.
 
 All functions will be tied into a lightweight, flexible front-end. It will probably leverage Terraform via Python to create infrastructures, eventually.
+
+
+## TODO
+### Komposer.py
+[] Check for existing kompose install
+[] Get komposer.py functions working
+
+### Everything else
+[] A whole lot of things.
