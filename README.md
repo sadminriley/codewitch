@@ -19,7 +19,7 @@ All functions will be tied into a lightweight, flexible front-end. It will proba
 
 ## TODO
 #### Komposer.py
-[] Check for existing kompose install and get komposer.py functions working
+[*] Check for existing kompose install and get komposer.py functions working
 
 #### Everything else
 [] A whole lot of things.

@@ -10,17 +10,15 @@ import sys
 distro_info = lsb_release.get_distro_information()
 
 
-# Use pathlib to check for kompose
 KOMPOSE_PATH = "/usr/local/bin/kompose"
 
 
+# Check for existing kompose install, installs it otherwise
 def check_kompose():
     if not os.path.exists(KOMPOSE_PATH):
         install_kompose()
     else:
         print("\n %s already found. Not installing. \n" % KOMPOSE_PATH)
-
-
 
 
 def install_kompose():
