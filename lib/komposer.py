@@ -10,6 +10,19 @@ import sys
 distro_info = lsb_release.get_distro_information()
 
 
+# Use pathlib to check for kompose
+KOMPOSE_PATH = "/usr/local/bin/kompose"
+
+
+def check_kompose():
+    if not os.path.exists(KOMPOSE_PATH):
+        install_kompose()
+    else:
+        print("\n %s already found. Not installing. \n" % KOMPOSE_PATH)
+
+
+
+
 def install_kompose():
     if 'Ubuntu' in distro_info['DESCRIPTION']:
         install_process = subprocess.Popen("./install_kompose_deb.sh", shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE) # Installs 'Most' Linux distros
@@ -34,7 +47,7 @@ def install_kompose():
 def run_kompose(dir_name=os.getcwd()):
     # Log the run command output
     try:
-        subprocess.run(["kompose", "konvert"])
+        subprocess.run(["kompose", "convert"])
     except subprocess.CalledProcessError as e:
         print(e.output)
 
@@ -43,7 +56,7 @@ def run_kompose_json(dir_name=os.getcwd()):
     # Log the run command output
     # Generate JSON from yml
     try:
-        subprocess.run(["kompose", "konvert", "-j"])
+        subprocess.run(["kompose", "convert", "-j"])
     except subprocess.CalledProcessError as e:
         print(e.output)
 
@@ -52,7 +65,7 @@ def run_kompose_helm(dir_name=os.getcwd()):
     # Log the run command output
     # Generate Helm chart
     try:
-        subprocess.run(["kompose", "konvert", "-c"])
+        subprocess.run(["kompose", "convert", "-c"])
     except subprocess.CalledProcessError as e:
         print(e.output)
 
@@ -84,8 +97,3 @@ def run_kompose_statefulset(dir_name=os.getcwd()):
         subprocess.run(["kompose", "convert", "--controller", "statefulSet"])
     except subprocess.CalledProcessError as e:
         print(e.output)
-
-
-
-
-install_kompose()
