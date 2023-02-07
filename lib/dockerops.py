@@ -1,11 +1,14 @@
 #!/usr/bin/env python3.11
 import docker
+import glob
 import os
 import uuid
 import logging
 from decouple import config
 from git import Repo
 from komposer import run_kompose, run_kompose_json, run_kompose_helm, run_kompose_repcontroller, run_kompose_daemonset, run_kompose_statefulset
+from pathlib import Path
+
 
 
 '''
@@ -124,10 +127,22 @@ def docker_kompose(file_dir=os.getcwd(),
 
 
 
+# This returns a list of found files from the below provided file names
+
+file_ext = ['docker-compose.yaml', 'docker-compose.yml']
+
+file_names = [fn for fn in os.listdir(os.getcwd()) if any(fn.endswith(ext) for ext in file_ext)]
 
 
-pull_docker(HUB_IMAGE)
+'''
+EXAMPLE
 
 
-run_docker(HUB_IMAGE)
+for item in file_names:
+    run_kompose_daemonset(item)
+'''
+
+for item in file_names:
+    run_kompose(item)
+
 

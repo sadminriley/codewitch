@@ -23,3 +23,48 @@ All functions will be tied into a lightweight, flexible front-end. It will proba
 
 #### Everything else
 [] A whole lot of things.
+
+
+#### Kompose functions from the sample docker-compose.yaml in lib applied to minikube -
+
+```
+python3.11 dockerops.py
+GIT_URL is bar
+GIT_URL not found in config file, using Docker...
+INFO Kubernetes file "frontend-tcp-service.yaml" created
+INFO Kubernetes file "redis-master-service.yaml" created
+INFO Kubernetes file "redis-slave-service.yaml" created
+INFO Kubernetes file "frontend-deployment.yaml" created
+INFO Kubernetes file "redis-master-deployment.yaml" created
+INFO Kubernetes file "redis-slave-deployment.yaml" created
+
+```
+
+Then, as normal just run kubectl to apply them
+
+```
+ kubectl apply -f .
+deployment.apps/frontend configured
+service/frontend-tcp configured
+deployment.apps/redis-master configured
+service/redis-master configured
+deployment.apps/redis-slave configured
+service/redis-slave configured
+```
+
+You should be able to see the pods running now
+
+
+```
+kubectl get po
+NAME                           READY   STATUS    RESTARTS   AGE
+frontend-59fcdb96b7-fc7dx      1/1     Running   0          8s
+redis-master-bb667cb7d-kb4lj   1/1     Running   0          8s
+redis-slave-5bff569f56-zf4hg   1/1     Running   0          8s
+```
+
+
+
+
+
+
