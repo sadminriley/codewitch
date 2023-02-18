@@ -4,6 +4,7 @@ import glob
 import os
 import uuid
 import logging
+import subprocess
 from decouple import config
 from git import Repo
 from komposer import run_kompose, run_kompose_json, run_kompose_helm, run_kompose_repcontroller, run_kompose_daemonset, run_kompose_statefulset
@@ -45,10 +46,9 @@ if config('HUB_IMAGE') is not None:
 
 
 
-
 # Connect to the docker client
 
-client = docker.DockerClient(base_url='unix://var/run/docker.sock')
+docker_client = docker.DockerClient(base_url='unix://var/run/docker.sock')
 
 
 
@@ -58,7 +58,7 @@ def clone_git(git_url):
 
 
 def pull_docker(hub_image, tag=None):
-    client.images.pull(hub_image, tag) # Pull the docker image
+    docker_client.images.pull(hub_image, tag) # Pull the docker image
     print('Log here to show container being pulled')
 
 
@@ -66,18 +66,18 @@ def pull_docker(hub_image, tag=None):
 
 # keeping this same function for organizational purposes
 def pull_registry(hub_image):
-    client.images.pull(hub_image)  # Pull the docker image
+    docker_client.images.pull(hub_image)  # Pull the docker image
 
     print('Log here to show container being pulled')
 
 
 def run_docker(hub_image):
-    client.containers.run(hub_image)
+    docker_client.containers.run(hub_image)
     print('Some Logging stuff to show running containers')
 
 
 def run_docker_detach(hub_image):
-    client.containers.run(hub_image, detach=True)
+    docker_client.containers.run(hub_image, detach=True)
     print('Some Logging stuff to show detached containers')
 
 
@@ -95,7 +95,7 @@ def log_error(func_name, tags=None) -> None:
 
 
 def run_docker_detach(hub_image):
-    log = client.containers.run(hub_image, detach=True)
+    log = docker_client.containers.run(hub_image, detach=True)
     for item in log:
         log_info(item)
 
@@ -141,7 +141,17 @@ for item in file_names:
     run_kompose_daemonset(item)
 '''
 
-for item in file_names:
-    run_kompose(item)
+def get_kompose_files(file_names):
+    for item in file_names:
+        run_kompose(item)
 
 
+def kubectl_apply():
+    for file in glob.glob("*.yaml"):
+        if file != 'docker-compose.yaml':
+            subprocess.run([f"kubectl", "apply", "-f", file])
+
+
+
+get_kompose_files(file_names)
+kubectl_apply()
