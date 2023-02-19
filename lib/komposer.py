@@ -7,7 +7,7 @@ import subprocess
 import sys
 
 
-distro_info = lsb_release.get_distro_information()
+DISTRO_INFO = lsb_release.get_distro_information()
 
 
 KOMPOSE_PATH = "/usr/local/bin/kompose"
@@ -22,14 +22,14 @@ def check_kompose():
 
 
 def install_kompose():
-    if 'Ubuntu' in distro_info['DESCRIPTION']:
+    if 'Ubuntu' in DISTRO_INFO['DESCRIPTION']:
         install_process = subprocess.Popen("./install_kompose_deb.sh", shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE) # Installs 'Most' Linux distros
         success, install_error = install_process.communicate()
         if not install_error:
             print('Install complete', success.decode())
         else:
             print('Error!', install_error.decode())
-    elif 'Fedora' in distro_info['DESCRIPTION']:
+    elif 'Fedora' in DISTRO_INFO['DESCRIPTION']:
         install_process = subprocess.Popen("./install_kompose_redhat.sh", shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE) # installs via DNF pkg manager
         success, install_error = install_process.communicate()
         if not install_error:
