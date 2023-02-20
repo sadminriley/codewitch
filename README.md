@@ -37,19 +37,13 @@ INFO Kubernetes file "redis-slave-service.yaml" created
 INFO Kubernetes file "frontend-deployment.yaml" created
 INFO Kubernetes file "redis-master-deployment.yaml" created
 INFO Kubernetes file "redis-slave-deployment.yaml" created
-
-```
-
-Then, as normal just run kubectl to apply them
-
-```
- kubectl apply -f .
-deployment.apps/frontend configured
+deployment.apps/redis-slave created
+lservice/redis-slave configured
+^Hdeployment.apps/frontend created
+deployment.apps/redis-master created
 service/frontend-tcp configured
-deployment.apps/redis-master configured
 service/redis-master configured
-deployment.apps/redis-slave configured
-service/redis-slave configured
+
 ```
 
 You should be able to see the pods running now
