@@ -5,6 +5,10 @@ Very few functions work as of right now.
 The first thing to fully work will be converting a singular docker-compose.yaml file to kubernetes configs
 and successfully creating the surrounding infrastructure for kubernetes to deploy the docker image from applied config files.
 
+Something I often ask and wonder - what if we could just make production ready stacks from docker-compose or Dockerfile's with an open-source tool? It could also create infrastructures, template Docker related files, and perhaps Cloudformation amongst Terraform.
+
+I've noticed many, many SaaS companies charging for similar tools by adding a nice GUI on top of it. 
+
 
 ## What is CodeWitch?
 
