@@ -1,4 +1,4 @@
-#!/usr/bin/env python3.11
+!/usr/bin/env python3.11
 import docker
 import glob
 import os
@@ -23,7 +23,8 @@ HUB_IMAGE=someurl/repo
 HUB_URL
 GIT_URL=gitgud.com/baebaz.git
 LANG=python, node, ruby, php
-
+FLASK_USER=test
+FLASK_PASS=supersecret
 '''
 
 # The None values for the decouple config .env were so vim/pycharm ignores warnings
