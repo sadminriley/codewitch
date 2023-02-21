@@ -21,6 +21,13 @@ All functions will be tied into a lightweight, flexible front-end. It will proba
 #### Komposer.py
 [*] Check for existing kompose install and get komposer.py functions working
 
+#### Dockerops.py
+[] Add argparse accordingly for Dockerization.
+
+#### Dockerfile
+[] Create Dockerfile and run kompose conversions successfully
+
+
 #### Everything else
 [] A whole lot of things.
 
