@@ -2,7 +2,8 @@
 import os
 import platform
 import subprocess
-from flask import Flask, flash, request, redirect, url_for
+from flask import Flask, flash, request, redirect, render_template, url_for
+from flask_basicauth import BasicAuth
 from werkzeug.utils import secure_filename
 
 
@@ -17,6 +18,12 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1000 * 1000
 app.config['SECRET_KEY'] = 'testkey'
 app.config['SESSION_TYPE'] = 'filesystem'
+app.config['BASIC_AUTH_USERNAME'] = 'test'
+app.config['BASIC_AUTH_PASSWORD'] = 'supersecret'
+
+
+
+basic_auth = BasicAuth(app)
 
 
 def allowed_file(filename):
@@ -24,8 +31,9 @@ def allowed_file(filename):
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 
-# Something could be done here to make it accept requests from JSON??? or something
+# Use basic auth for user/pass for flask
 @app.route('/upload', methods=['GET', 'POST'])
+@basic_auth.required
 def upload_file():
     if request.method == 'POST':
         # check if the post request has the file part
