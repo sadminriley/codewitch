@@ -61,7 +61,7 @@ def upload_file():
     return '''
     <!doctype html>
     <style>
-    * {
+    body {
     background-color: #0f3b42;
     }
     </style>
