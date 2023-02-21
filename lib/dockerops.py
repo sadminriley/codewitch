@@ -7,7 +7,6 @@ import logging
 import subprocess
 from decouple import config
 from git import Repo
-from komposer import run_kompose, run_kompose_json, run_kompose_helm, run_kompose_repcontroller, run_kompose_daemonset, run_kompose_statefulset
 from pathlib import Path
 
 
@@ -32,12 +31,9 @@ LANG=python, node, ruby, php
 # config file stuff
 
 
-
-
 if config('GIT_URL') is not None:
     print('GIT_URL is %s' % config('GIT_URL'))
     GIT_URL = config('GIT_URL')
-
 
 
 if config('HUB_IMAGE') is not None:
@@ -45,23 +41,18 @@ if config('HUB_IMAGE') is not None:
     HUB_IMAGE = config('HUB_IMAGE')
 
 
-
 # Connect to the docker client
 
 docker_client = docker.DockerClient(base_url='unix://var/run/docker.sock')
-
 
 
 def clone_git(git_url):
     Repo.clone_from(repo, repo_dir=os.getcwd())
 
 
-
 def pull_docker(hub_image, tag=None):
-    docker_client.images.pull(hub_image, tag) # Pull the docker image
+    docker_client.images.pull(hub_image, tag)  # Pull the docker image
     print('Log here to show container being pulled')
-
-
 
 
 # keeping this same function for organizational purposes
@@ -93,14 +84,68 @@ def log_error(func_name, tags=None) -> None:
     logging.error(func_name, tags)
 
 
-
 def run_docker_detach(hub_image):
     log = docker_client.containers.run(hub_image, detach=True)
     for item in log:
         log_info(item)
 
 
-## Consume docker compose stack with kompose.io and run it on the desired platform
+# Kube functions
+def run_kompose(dir_name=os.getcwd()):
+    # Log the run command output
+    try:
+        subprocess.run(["kompose", "convert"])
+    except subprocess.CalledProcessError as e:
+        print(e.output)
+
+
+def run_kompose_json(dir_name=os.getcwd()):
+    # Log the run command output
+    # Generate JSON from yml
+    try:
+        subprocess.run(["kompose", "convert", "-j"])
+    except subprocess.CalledProcessError as e:
+        print(e.output)
+
+
+def run_kompose_helm(dir_name=os.getcwd()):
+    # Log the run command output
+    # Generate Helm chart
+    try:
+        subprocess.run(["kompose", "convert", "-c"])
+    except subprocess.CalledProcessError as e:
+        print(e.output)
+
+
+# Convert only replicationController objects with optional replicaset number. Defaults to 1
+def run_kompose_repcontroller(dir_name=os.getcwd(), replicas=1):
+    # Log the run command output
+    try:
+        cmd = f"kompose convert --controller replicationController --replicas {replicas}"
+        subprocess.call(cmd, shell=True)
+    except subprocess.CalledProcessError as e:
+        print(e.output)
+
+
+def run_kompose_daemonset(dir_name=os.getcwd()):
+    # Log the run command output
+    # Generate *-daemonset.yaml files
+    try:
+        subprocess.run(["kompose", "convert", "--controller", "daemonSet"])
+    except subprocess.CalledProcessError as e:
+        print(e.output)
+
+
+def run_kompose_statefulset(dir_name=os.getcwd()):
+    # Log the run command output
+    # Generate *-statefulset.yaml files
+    try:
+        subprocess.run(["kompose", "convert", "--controller", "statefulSet"])
+    except subprocess.CalledProcessError as e:
+        print(e.output)
+
+
+# Consume docker compose stack with kompose.io and run it on the desired platform
 
 def docker_kompose(file_dir=os.getcwd(),
                    json_conversion=False,
@@ -124,22 +169,12 @@ def docker_kompose(file_dir=os.getcwd(),
         run_kompose(file_dir)
 
 
-
-
 # This returns a list of found files from the below provided file names
 
 file_ext = ['docker-compose.yaml', 'docker-compose.yml']
 
 file_names = [fn for fn in os.listdir(os.getcwd()) if any(fn.endswith(ext) for ext in file_ext)]
 
-
-'''
-EXAMPLE
-
-
-for item in file_names:
-    run_kompose_daemonset(item)
-'''
 
 def get_kompose_files(file_names):
     for item in file_names:
@@ -152,6 +187,10 @@ def kubectl_apply():
             subprocess.run([f"kubectl", "apply", "-f", file])
 
 
+# Example
+docker_kompose() # Run the function to convert files for k8s
+kubectl_apply() # Apply the files
 
-get_kompose_files(file_names)
-kubectl_apply()
+
+# docker_kompose(json_conversion=True) will return .json files
+# docker_kompose(helm=True) will generate a helm chart
