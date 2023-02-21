@@ -15,6 +15,8 @@ ALLOWED_EXTENSIONS = {'yml', 'yaml'}
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1000 * 1000
+app.config['SECRET_KEY'] = 'testkey'
+app.config['SESSION_TYPE'] = 'filesystem'
 
 
 def allowed_file(filename):
@@ -39,7 +41,7 @@ def upload_file():
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            return redirect(url_for('download_file', name=filename))
+            return redirect(url_for('upload_file', name=filename))
     return '''
     <!doctype html>
     <title>Upload docker-compose.yml,yaml file</title>
