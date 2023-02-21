@@ -60,12 +60,20 @@ def upload_file():
             return redirect(url_for('upload_file', name=filename))
     return '''
     <!doctype html>
+    <style>
+    * {
+    background-color: #0f3b42;
+    }
+    </style>
     <title>Upload docker-compose.yml,yaml file</title>
-    <h1>Upload new Docker Compose file</h1>
+    <h1 style="color: green;">Upload new Docker Compose file
     <form method=post enctype=multipart/form-data>
       <input type=file name=file>
       <input type=submit value=Upload>
     </form>
+     </body>
+    </h1>
+
     '''
 
 
