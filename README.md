@@ -7,7 +7,7 @@ and successfully creating the surrounding infrastructure for kubernetes to deplo
 
 Something I often ask and wonder - what if we could just make production ready stacks from docker-compose or Dockerfile's with an open-source tool? It could also create infrastructures, template Docker related files, and perhaps Cloudformation amongst Terraform.
 
-I've noticed many, many SaaS companies charging for similar tools by adding a nice GUI on top of it. 
+I've noticed many, many SaaS companies charging for similar tools by adding a nice GUI on top of it.
 
 
 ## What is CodeWitch?
@@ -69,7 +69,16 @@ redis-slave-5bff569f56-zf4hg   1/1     Running   0          8s
 ```
 
 
+#### Env file for decouple config
 
+```
+APP_SOURCE=dockerhub
+HUB_IMAGE=busybox
+HUB_URL=foo
+GIT_URL=bar
+LOG_STREAM=default
+FLASK_USER=test
+FLASK_PASS=supersecret
+```
 
-
-
+The flask_upload.py will not work without the FLASK_USER and FLASK_PASS set.

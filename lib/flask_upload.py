@@ -2,6 +2,7 @@
 import os
 import platform
 import subprocess
+from decouple import config as decouple_config
 from flask import Flask, flash, request, redirect, render_template, url_for
 from flask_basicauth import BasicAuth
 from werkzeug.utils import secure_filename
@@ -18,9 +19,16 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1000 * 1000
 app.config['SECRET_KEY'] = 'testkey'
 app.config['SESSION_TYPE'] = 'filesystem'
-app.config['BASIC_AUTH_USERNAME'] = 'test'
-app.config['BASIC_AUTH_PASSWORD'] = 'supersecret'
 
+
+if decouple_config('FLASK_USER') is not None:
+    print('FLASK_USER is %s' % decouple_config('FLASK_USER'))
+    app.config['BASIC_AUTH_USERNAME'] = decouple_config('FLASK_USER')
+
+
+if decouple_config('FLASK_PASS') is not None:
+    print('FLASK_PASS is %s' % decouple_config('FLASK_PASS'))
+    app.config['BASIC_AUTH_PASSWORD'] = decouple_config('FLASK_PASS')
 
 
 basic_auth = BasicAuth(app)
@@ -59,7 +67,6 @@ def upload_file():
       <input type=submit value=Upload>
     </form>
     '''
-
 
 
 if __name__ == '__main__':
