@@ -1,4 +1,5 @@
 #!/usr/bin/env python3.11
+import argparse
 import docker
 import glob
 import os
@@ -8,6 +9,9 @@ import subprocess
 from decouple import config
 from git import Repo
 from pathlib import Path
+
+
+__version__ = '0.1'
 
 
 '''
@@ -49,8 +53,6 @@ docker_client = docker.DockerClient(base_url='unix://var/run/docker.sock')
 
 Logger = logging.getLogger(__name__)
 
-
-    print('Log here to show container being pulled')
 
 
 def run_docker(hub_image):
@@ -180,21 +182,27 @@ def parse_arguments():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--kompose',
                         help='Convert docker-compose.yml to k8s configs in YAML',
+                        dest='kompose',
                         action='store_true')
     parser.add_argument('--kompose-json',
                         help='Convert docker-compose.yml to k8s configs in JSON',
+                        dest='kompose_json',
                         action='store_true')
     parser.add_argument('--kompose-helm',
                         help='Convert docker-compose.yml to k8s Helm chart',
+                        dest='kompose_helm',
                         action='store_true')
     parser.add_argument('--kompose-repc',
                         help='Convert docker-compose.yml to get k8s replication controller configs',
+                        dest='kompose_repc',
                         action='store_true')
     parser.add_argument('--kompose-daemonset',
                         help='Convert docker-compose.yml to get k8s daemonset',
+                        dest='kompose_daemonset',
                         action='store_true')
     parser.add_argument('--kompose-stateful',
                         help='Convert docker-compose.yml to get k8s statefulset',
+                        dest='kompose_stateful',
                         action='store_true')
 
 
@@ -202,8 +210,33 @@ def parse_arguments():
     return args
 
 
+def main():
+    print('codewitch' + __version__)
+
+    args = parse_arguments()
+    if args.kompose:
+        docker_kompose()
+
+    if args.kompose_json:
+        docker_kompose(json=True)
+
+    if args.kompose_helm:
+        docker_kompose(helm=True)
+
+    if args.kompose_repc:
+        docker_kompose(repc=True, repc_replicas=1)  # Make this work with optional narg argument later
+
+    if args.kompose_daemonset:
+        docker_kompose(daemonset=True)
+
+    if args.kompose_stateful:
+        docker_kompose(statefulset=True)
 
 
+
+
+if __name__ == '__main__':
+    main()
 
 
 # Example
