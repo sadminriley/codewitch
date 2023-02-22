@@ -1,4 +1,4 @@
-!/usr/bin/env python3.11
+#!/usr/bin/env python3.11
 import docker
 import glob
 import os
@@ -47,18 +47,8 @@ if config('HUB_IMAGE') is not None:
 docker_client = docker.DockerClient(base_url='unix://var/run/docker.sock')
 
 
-def clone_git(git_url):
-    Repo.clone_from(repo, repo_dir=os.getcwd())
+Logger = logging.getLogger(__name__)
 
-
-def pull_docker(hub_image, tag=None):
-    docker_client.images.pull(hub_image, tag)  # Pull the docker image
-    print('Log here to show container being pulled')
-
-
-# keeping this same function for organizational purposes
-def pull_registry(hub_image):
-    docker_client.images.pull(hub_image)  # Pull the docker image
 
     print('Log here to show container being pulled')
 
@@ -68,27 +58,22 @@ def run_docker(hub_image):
     print('Some Logging stuff to show running containers')
 
 
-def run_docker_detach(hub_image):
-    docker_client.containers.run(hub_image, detach=True)
-    print('Some Logging stuff to show detached containers')
-
 
 # Create unique log id for log tags
 unique_log_id = str(uuid.uuid4().int & (1 << 64) - 1)
 
 
 def log_info(func_name, tags=None) -> None:
-    logging.info(func_name, tags)
+    Logger.info(func_name, tags)
 
 
 def log_error(func_name, tags=None) -> None:
-    logging.error(func_name, tags)
+    Logger.error(func_name, tags)
 
 
 def run_docker_detach(hub_image):
-    log = docker_client.containers.run(hub_image, detach=True)
-    for item in log:
-        log_info(item)
+    container = docker_client.containers.run(hub_image, detach=True)
+    container.logs()
 
 
 # Kube functions
@@ -188,10 +173,42 @@ def kubectl_apply():
             subprocess.run([f"kubectl", "apply", "-f", file])
 
 
-# Example
-docker_kompose() # Run the function to convert files for k8s
-kubectl_apply() # Apply the files
+def parse_arguments():
+    '''
+    Parsing user arguments. Use -h to see commands. These will be passed to through script via Docker
+    '''
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--kompose',
+                        help='Convert docker-compose.yml to k8s configs in YAML',
+                        action='store_true')
+    parser.add_argument('--kompose-json',
+                        help='Convert docker-compose.yml to k8s configs in JSON',
+                        action='store_true')
+    parser.add_argument('--kompose-helm',
+                        help='Convert docker-compose.yml to k8s Helm chart',
+                        action='store_true')
+    parser.add_argument('--kompose-repc',
+                        help='Convert docker-compose.yml to get k8s replication controller configs',
+                        action='store_true')
+    parser.add_argument('--kompose-daemonset',
+                        help='Convert docker-compose.yml to get k8s daemonset',
+                        action='store_true')
+    parser.add_argument('--kompose-stateful',
+                        help='Convert docker-compose.yml to get k8s statefulset',
+                        action='store_true')
 
+
+    args = parser.parse_args()
+    return args
+
+
+
+
+
+
+# Example
+#docker_kompose() # Run the function to convert files for k8s
+#kubectl_apply() # Apply the files
 
 # docker_kompose(json_conversion=True) will return .json files
 # docker_kompose(helm=True) will generate a helm chart
