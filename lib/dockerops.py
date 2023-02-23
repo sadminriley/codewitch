@@ -8,7 +8,6 @@ import logging
 import subprocess
 from decouple import config
 from git import Repo
-from pathlib import Path
 
 
 __version__ = '0.1'
@@ -48,7 +47,8 @@ if config('HUB_IMAGE') is not None:
 
 # Connect to the docker client
 
-docker_client = docker.DockerClient(base_url='unix://var/run/docker.sock')
+#docker_client = docker.DockerClient(base_url='unix://var/run/docker.sock')
+docker_client = docker.from_env()
 
 
 Logger = logging.getLogger(__name__)
