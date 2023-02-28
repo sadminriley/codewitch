@@ -30,7 +30,6 @@ All functions will be tied into a lightweight, flexible front-end. It will proba
 
 #### Dockerfile
 [] Create Dockerfile and run kompose conversions successfully
-[] Fix issue with running docker sdk in Dockerfile
 
 
 #### Everything else

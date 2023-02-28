@@ -45,9 +45,8 @@ if config('HUB_IMAGE') is not None:
     HUB_IMAGE = config('HUB_IMAGE')
 
 
-# Connect to the docker client
+# Connect to the docker client with from_env
 
-#docker_client = docker.DockerClient(base_url='unix://var/run/docker.sock')
 docker_client = docker.from_env()
 
 
@@ -245,3 +244,5 @@ if __name__ == '__main__':
 
 # docker_kompose(json_conversion=True) will return .json files
 # docker_kompose(helm=True) will generate a helm chart
+
+## ./dockerops.py --kompose-json
