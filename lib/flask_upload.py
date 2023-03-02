@@ -1,6 +1,7 @@
 #!/usr/bin/env python3.11
 import os
 import platform
+import secrets
 import subprocess
 from decouple import config as decouple_config
 from flask import Flask, flash, request, redirect, render_template, url_for
@@ -17,7 +18,6 @@ ALLOWED_EXTENSIONS = {'yml', 'yaml'}
 app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1000 * 1000
-app.config['SECRET_KEY'] = 'testkey'
 app.config['SESSION_TYPE'] = 'filesystem'
 
 
@@ -29,6 +29,14 @@ if decouple_config('FLASK_USER') is not None:
 if decouple_config('FLASK_PASS') is not None:
     print('FLASK_PASS is %s' % decouple_config('FLASK_PASS'))
     app.config['BASIC_AUTH_PASSWORD'] = decouple_config('FLASK_PASS')
+
+
+if decouple_config('SECRET_KEY') is None:
+    print('SECRET_KEY not found...creating \n')
+else:
+    HEX_KEY = secrets.token_hex(16)
+    app.config['SECRET_KEY'] = HEX_KEY
+    print(f'SECRET_KEY is {HEX_KEY}')
 
 
 basic_auth = BasicAuth(app)

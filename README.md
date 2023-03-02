@@ -73,15 +73,17 @@ redis-slave-5bff569f56-zf4hg   1/1     Running   0          8s
 
 ```
 APP_SOURCE=dockerhub
-HUB_IMAGE=busybox
+HUB_IMAGE=redis
 HUB_URL=foo
 GIT_URL=bar
 LOG_STREAM=default
 FLASK_USER=test
 FLASK_PASS=supersecret
+SECRET_KEY=
+
 ```
 
-The flask_upload.py will not work without the FLASK_USER and FLASK_PASS set.
+The flask_upload.py will not work without the FLASK_USER and FLASK_PASS set. SECRET_KEY will be created on run if None is passed.
 
 
 ### Flask_upload.py
@@ -90,4 +92,4 @@ This allows you to upload a docker-compose file with either .yml or .yaml. Launc
 
 <img src="https://user-images.githubusercontent.com/25120457/220446355-cbcaecb2-e65a-416d-8fd9-99aa286401a3.png" width="90%"></img> <img src="https://user-images.githubusercontent.com/25120457/220446436-55c73644-1135-4745-95e1-9811c5f5cfe2.png" width="90%"></img>
 
-The comic sans is just for fun :)
+The comic sans is just for fun :) , of course.
