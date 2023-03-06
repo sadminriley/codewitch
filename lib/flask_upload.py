@@ -4,7 +4,7 @@ import platform
 import secrets
 import subprocess
 from decouple import config as decouple_config
-from flask import Flask, flash, request, redirect, render_template, url_for
+from flask import Flask, flash, jsonify, request, redirect, render_template, url_for
 from flask_basicauth import BasicAuth
 from werkzeug.utils import secure_filename
 
@@ -16,6 +16,8 @@ ALLOWED_EXTENSIONS = {'yml', 'yaml'}
 
 # Init Flask app and settings. Set max upload size to 16MB
 app = Flask(__name__)
+
+
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1000 * 1000
 app.config['SESSION_TYPE'] = 'filesystem'
@@ -45,6 +47,14 @@ basic_auth = BasicAuth(app)
 def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
+
+# Flask stuff starts below
+
+@app.route('/', methods=['GET'])
+def health_check():
+    response = jsonify(success=True)
+    return response
 
 
 # Use basic auth for user/pass for flask
@@ -95,6 +105,7 @@ def upload_file():
     </h1>
 
     '''
+
 
 
 if __name__ == '__main__':
