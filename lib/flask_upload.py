@@ -1,4 +1,5 @@
 #!/usr/bin/env python3.11
+import dockerops
 import os
 import platform
 import secrets
@@ -55,6 +56,12 @@ def allowed_file(filename):
 def health_check():
     response = jsonify(success=True)
     return response
+
+
+@app.route('/kube/apply')
+def kube_apply():
+    out = dockerops.kubectl_apply()
+    return jsonify(success=True)
 
 
 # Use basic auth for user/pass for flask
