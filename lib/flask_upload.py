@@ -50,12 +50,30 @@ def allowed_file(filename):
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 
-# Flask stuff starts below
+# Flask stuff starts below. Add auth stuff later on routes.
 
 @app.route('/', methods=['GET'])
 def health_check():
     response = jsonify(success=True)
     return response
+
+
+@app.route('/kompose')
+def kompose():
+    out = dockerops.docker_kompose()
+    return jsonify(success=True)
+
+
+@app.route('/kompose/json')
+def kompose_json():
+    out = dockerops.docker_kompose(json_conversion=True)
+    return jsonify(success=True)
+
+
+@app.route('/kompose/helm')
+def kompose_helm():
+    out = dockerops.docker_kompose(helm=True)
+    return jsonify(success=True)
 
 
 @app.route('/kube/apply')
