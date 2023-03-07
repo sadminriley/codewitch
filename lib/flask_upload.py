@@ -80,22 +80,24 @@ def kompose_helm():
 
 @app.route('/kompose/replication')
 def kompose_replication():
-    out = dockerops.docker_kompose(repc=True) # Also accepts repc_replicas count. Defaults to 1
+    # Also will accept repc_replicas count in a future upload. Defaults to 1 currently.
+    out = dockerops.docker_kompose(repc=True)
     return jsonify(success=True)
 
 
 @app.route('/kompose/daemonset')
 def kompose_daemonset():
-    out = dockerops.docker_kompose(repc=True) # Also accepts repc_replicas count. Defaults to 1
+    out = dockerops.docker_kompose(daemonset=True)
     return jsonify(success=True)
 
 
 @app.route('/kompose/statefulset')
 def kompose_statefulset():
-    out = dockerops.docker_kompose(repc=True) # Also accepts repc_replicas count. Defaults to 1
+    out = dockerops.docker_kompose(statefulset=True)
     return jsonify(success=True)
 
 
+# Kube routes
 @app.route('/kube/apply')
 def kube_apply():
     out = dockerops.kubectl_apply()
