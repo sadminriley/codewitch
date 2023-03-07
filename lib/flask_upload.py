@@ -58,6 +58,8 @@ def health_check():
     return response
 
 
+# Kompose conversion routes
+
 @app.route('/kompose')
 def kompose():
     out = dockerops.docker_kompose()
@@ -73,6 +75,24 @@ def kompose_json():
 @app.route('/kompose/helm')
 def kompose_helm():
     out = dockerops.docker_kompose(helm=True)
+    return jsonify(success=True)
+
+
+@app.route('/kompose/replication')
+def kompose_replication():
+    out = dockerops.docker_kompose(repc=True) # Also accepts repc_replicas count. Defaults to 1
+    return jsonify(success=True)
+
+
+@app.route('/kompose/daemonset')
+def kompose_daemonset():
+    out = dockerops.docker_kompose(repc=True) # Also accepts repc_replicas count. Defaults to 1
+    return jsonify(success=True)
+
+
+@app.route('/kompose/statefulset')
+def kompose_statefulset():
+    out = dockerops.docker_kompose(repc=True) # Also accepts repc_replicas count. Defaults to 1
     return jsonify(success=True)
 
 
