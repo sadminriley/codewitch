@@ -1,5 +1,5 @@
 import sys
-
+from decouple import config
 
 # this is not pythonic and hacky, fix this later!
 sys.path.append('lib')
