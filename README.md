@@ -1,4 +1,9 @@
 # CodeWitch Prototype
+
+
+[![CircleCI](https://dl.circleci.com/status-badge/img/gh/sadminriley/codewitch/tree/trunk.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/sadminriley/codewitch/tree/trunk)
+
+
 This is the wip for this idea. I wanted to bring together numerous open source tools to deploy code and manage infrastructure better.
 Very few functions work as of right now.
 
