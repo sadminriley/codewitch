@@ -76,6 +76,9 @@ redis-slave-5bff569f56-zf4hg   1/1     Running   0          8s
 
 #### Env file for decouple config
 
+
+Warning: Plain .env examples are shown in this repo. You'd want to gitignore .env for development, and pull sensitive values from elsewhere for it.
+
 ```
 APP_SOURCE=dockerhub
 HUB_IMAGE=redis
