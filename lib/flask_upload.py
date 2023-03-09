@@ -1,5 +1,6 @@
 #!/usr/bin/env python3.11
 import dockerops
+import komposer
 import os
 import platform
 import secrets
@@ -59,6 +60,12 @@ def health_check():
 
 
 # Kompose conversion routes
+
+@app.route('/kompose/install')
+def kompose_install():
+    out = komposer.check_kompose()
+    return jsonify(success=True)
+
 
 @app.route('/kompose')
 def kompose():
