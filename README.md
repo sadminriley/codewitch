@@ -1,4 +1,4 @@
-# CodeWitch Prototype
+# CodeWitch + Aphrodite Prototype
 
 
 [![CircleCI](https://dl.circleci.com/status-badge/img/gh/sadminriley/codewitch/tree/trunk.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/sadminriley/codewitch/tree/trunk)
