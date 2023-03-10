@@ -7,7 +7,7 @@ import uuid
 import logging
 import subprocess
 from decouple import config
-from git import Repo
+#from git import Repo
 
 
 __version__ = '0.1'
