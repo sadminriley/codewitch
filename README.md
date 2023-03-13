@@ -8,7 +8,8 @@ This is the wip for this idea. I wanted to bring together numerous open source t
 Very few functions work as of right now.
 
 The first thing to fully work will be converting a singular docker-compose.yaml file to kubernetes configs
-and successfully creating the surrounding infrastructure for kubernetes to deploy the docker image from applied config files.
+and successfully creating the surrounding infrastructure for kubernetes to deploy the docker image from applied config files. This works now, at a very
+rudimentary level.
 
 Something I often ask and wonder - what if we could just make production ready stacks from docker-compose or Dockerfile's with an open-source tool? It could also create infrastructures, template Docker related files, and perhaps Cloudformation amongst Terraform.
 
@@ -21,9 +22,15 @@ CodeWitch aims to create infrastructure from Docker, Docker Compose, and Git sou
 coding languages, and is compatible with AWS/GCP/Azure.
 
 
-It will eventually do many other things like create infrastructure based on resource crawling, collect metrics, and report data.
+## What is Aphrodite?
 
-All functions will be tied into a lightweight, flexible front-end. It will probably leverage Terraform via Python to create infrastructures, eventually.
+First, this was going to just be a very simple tool. I wanted it to have the ability to create production ready Kuberentes clusters from Docker files,
+especially compose stacks. That functionaility will be broken into it's own repo soon.
+
+
+Meet Aphrodite! Aphrodite has more of a focus on things like -
+Building autuomated infrastructure environments, migrations, and metrics/data reoprting.
+
 
 
 ## TODO
@@ -39,6 +46,7 @@ All functions will be tied into a lightweight, flexible front-end. It will proba
 
 #### Everything else
 [] A whole lot of things.
+
 
 
 #### Kompose functions from the sample docker-compose.yaml in lib applied to minikube -
