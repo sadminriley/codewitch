@@ -38,7 +38,7 @@ if decouple_config('FLASK_PASS') is not None:
 if decouple_config('SECRET_KEY') is None:
     print('SECRET_KEY not found...creating \n')
 else:
-    HEX_KEY = secrets.token_hex(16)
+    HEX_KEY = secrets.token_urlsafe(16)
     app.config['SECRET_KEY'] = HEX_KEY
     print(f'SECRET_KEY is {HEX_KEY}')
 
