@@ -1,6 +1,7 @@
 #!/usr/bin/env python3.11
 import argparse
 #import docker
+import helpers
 import glob
 import os
 import uuid
@@ -50,9 +51,6 @@ if config('HUB_IMAGE') is not None:
 #docker_client = docker.from_env()
 
 
-Logger = logging.getLogger(__name__)
-
-
 '''
 def run_docker(hub_image):
     docker_client.containers.run(hub_image)
@@ -64,23 +62,6 @@ def run_docker_detach(hub_image):
     container.logs()
 
 '''
-
-
-# Create unique log id for log tags
-unique_log_id = str(uuid.uuid4().int & (1 << 64) - 1)
-
-
-def log_info(func_name, tags=None) -> None:
-    Logger.info(func_name, tags)
-
-
-def log_error(func_name, tags=None) -> None:
-    Logger.error(func_name, tags)
-
-
-def run_docker_detach(hub_image):
-    container = docker_client.containers.run(hub_image, detach=True)
-    container.logs()
 
 
 # Kube functions
