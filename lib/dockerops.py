@@ -119,6 +119,16 @@ def run_kompose_statefulset(dir_name=os.getcwd()):
         print(e.output)
 
 
+def run_kompose_up(dir_name=os.getcwd(),
+                   compose_file="docker-compose.yaml"):
+    # Log the run command output
+    # run kompose --file docker-compose.yaml up
+    try:
+        subprocess.run(["kompose", "--file", compose_file, "up"])
+    except subprocess.CalledProcessError as e:
+        print(e.output)
+
+
 # Consume docker compose stack with kompose.io and run it on the desired platform
 
 def docker_kompose(file_dir=os.getcwd(),
@@ -127,7 +137,8 @@ def docker_kompose(file_dir=os.getcwd(),
                    repc=False,
                    repc_replicas=1,
                    daemonset=False,
-                   statefulset=False):
+                   statefulset=False,
+                   kompose_up=False):
     # Conversion types
     if bool(json_conversion):
         run_kompose_json(file_dir)
@@ -139,6 +150,8 @@ def docker_kompose(file_dir=os.getcwd(),
         run_kompose_daemonset(file_dir)
     elif bool(statefulset):
         run_kompose_statefulset(file_dir)
+    elif bool(kompose_up):
+        run_kompose_up(file_dir)
     else:
         run_kompose(file_dir)
 

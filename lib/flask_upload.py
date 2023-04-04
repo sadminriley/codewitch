@@ -106,6 +106,12 @@ def kompose_statefulset():
     return jsonify(success=True)
 
 
+@app.route('/kompose/up')
+def kompose_up():
+    out = dockerops.docker_kompose(kompose_up=True)
+    return jsonify(success=True)
+
+
 # Kube routes
 @app.route('/kube/apply')
 def kube_apply():
