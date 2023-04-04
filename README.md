@@ -35,21 +35,21 @@ Building autuomated infrastructure environments, migrations, and metrics/data re
 
 ## TODO
 #### Komposer.py
-[*] Check for existing kompose install and get komposer.py functions working
-[]  Implement OpenShift support
-[]  Fix PVC issues
-[]  Better image pulls
-[]  Kompose up support
+- [*] Check for existing kompose install and get komposer.py functions working
+- []  Implement OpenShift support
+- []  Fix PVC issues
+- []  Better image pulls
+- []  Kompose up support
 
 #### Dockerops.py
-[] Add argparse accordingly for Dockerization.
+- [] Add argparse accordingly for Dockerization.
 
 #### Dockerfile
-[*] Create Dockerfile and run kompose conversions successfully
+- [*] Create Dockerfile and run kompose conversions successfully
 
 
 #### Everything else
-[] A whole lot of things.
+- [] A whole lot of things.
 
 
 
