@@ -203,6 +203,11 @@ def parse_arguments():
                         help='Convert docker-compose.yml to get k8s statefulset',
                         dest='kompose_stateful',
                         action='store_true')
+    parser.add_argument('--kompose-up',
+                        help='Convert docker-compose.yml and apply after conversion',
+                        dest='kompose_up',
+                        action='store_true')
+
 
 
     args = parser.parse_args()
@@ -230,6 +235,9 @@ def main():
 
     if args.kompose_stateful:
         docker_kompose(statefulset=True)
+
+    if args.kompose_up:
+        docker_kompose(kompose_up=True)
 
 
 
