@@ -1,4 +1,5 @@
 lib/__pycache__
+lib/scratch.py
 __pycache__/*
 bin/
 lib/python3.11/
