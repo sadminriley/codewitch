@@ -1,6 +1,7 @@
 #!/usr/bin/env python3.11
 import dockerops
 import helpers
+import json
 import komposer
 import os
 import platform
@@ -25,6 +26,7 @@ app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['MAX_CONTENT_LENGTH'] = 16 * 1000 * 1000
 app.config['SESSION_TYPE'] = 'filesystem'
+app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
 
 
 if decouple_config('FLASK_USER') is not None:
@@ -94,7 +96,7 @@ def kompose_replication():
     return jsonify(success=True)
 
 
-@app.route('/kompose/daemonset')
+app.route('/kompose/daemonset')
 def kompose_daemonset():
     out = dockerops.docker_kompose(daemonset=True)
     return jsonify(success=True)
@@ -112,11 +114,21 @@ def kompose_up():
     return jsonify(success=True)
 
 
+
 # Kube routes
 @app.route('/kube/apply')
 def kube_apply():
     out = dockerops.kubectl_apply()
     return jsonify(success=True)
+
+
+@app.route('/kube/listallpods')
+def kube_listallpods():
+    #out = subprocess.run(['kubectl','get','pods','-A'], shell=True, capture_output=True, text=True)
+    out = subprocess.check_output(['kubectl get pods -A'], shell=True, text=True)
+    output = str(out)
+    return jsonify(output)
+
 
 
 # Use basic auth for user/pass for flask
