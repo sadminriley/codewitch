@@ -155,8 +155,8 @@ def upload_file():
     <style>
     body {
       color-scheme: dark;
-      background-color: rgb(22 46 22);
-      font-family: 'Comic Sans MS' !important;
+      background-color: rgb(1 1 1);
+      font-family: 'Tahoma' !important;
     }
 
     button {
@@ -204,7 +204,7 @@ def upload_file():
 
     </style>
     <title>Upload docker-compose.yml,yaml file</title>
-    <h1 style="color: #5a4aa0;">Upload new Docker Compose file
+    <h1 style="color: #8e2796;">Upload new Docker Compose file
     <form method=post enctype=multipart/form-data>
       <input type=file name=file>
       <input type=submit value=Upload>
