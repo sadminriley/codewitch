@@ -65,25 +65,25 @@ def health_check():
 
 # Kompose conversion routes
 
-@app.route('/kompose/install')
+@app.route('/kompose/install', methods=['GET','POST'])
 def kompose_install():
     out = komposer.check_kompose()
     return jsonify(success=True)
 
 
-@app.route('/kompose')
+@app.route('/kompose', methods=['GET','POST'])
 def kompose():
     out = dockerops.docker_kompose()
     return jsonify(success=True)
 
 
-@app.route('/kompose/json')
+@app.route('/kompose/json', methods=['GET','POST'])
 def kompose_json():
     out = dockerops.docker_kompose(json_conversion=True)
     return jsonify(success=True)
 
 
-@app.route('/kompose/helm')
+@app.route('/kompose/helm', methods=['GET','POST'])
 def kompose_helm():
     out = dockerops.docker_kompose(helm=True)
     return jsonify(success=True)
@@ -168,12 +168,46 @@ def upload_file():
       font-size: 1.5em;
     }
 
+   button2 {
+      height: 2em;
+      min-width: 3.236em; border-radius: 25em;
+      border-width: 0;
+      color: roba (255, 255,255, .78);
+      background-color: rgba(150, 150, 150, .5);
+      font-size: 1.5em;
+    }
+  button3 {
+      height: 2em;
+      min-width: 3.236em; border-radius: 25em;
+      border-width: 0;
+      color: roba (255, 255,255, .78);
+      background-color: rgba(150, 150, 150, .5);
+      font-size: 1.5em;
+    }
+  button4 {
+      height: 2em;
+      min-width: 3.236em; border-radius: 25em;
+      border-width: 0;
+      color: roba (255, 255,255, .78);
+      background-color: rgba(150, 150, 150, .5);
+      font-size: 1.5em;
+    }
+
     </style>
     <title>Upload docker-compose.yml,yaml file</title>
     <h1 style="color: #5a4aa0;">Upload new Docker Compose file
     <form method=post enctype=multipart/form-data>
       <input type=file name=file>
       <input type=submit value=Upload>
+    </form>
+    <form method=post action="/kompose/install">
+      <input type=submit value="Check for existing Kompose install">
+    </form>
+    <form method=post action="/kompose">
+      <input type=submit value=Kompose>
+    </form>
+    <form method=post action="/kompose/json">
+      <input type=submit value="Kompose to JSON">
     </form>
      </body>
     </h1>
