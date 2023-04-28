@@ -8,7 +8,7 @@ import platform
 import secrets
 import subprocess
 from decouple import config as decouple_config
-from flask import Flask, flash, jsonify, request, redirect, render_template, url_for
+from flask import Flask, Response, escape, flash, jsonify, request, redirect, render_template, url_for
 from flask_basicauth import BasicAuth
 from werkzeug.utils import secure_filename
 
@@ -89,7 +89,7 @@ def kompose_helm():
     return jsonify(success=True)
 
 
-@app.route('/kompose/replication')
+@app.route('/kompose/replication', methods=['GET','POST'])
 def kompose_replication():
     # Also will accept repc_replicas count in a future upload. Defaults to 1 currently.
     out = dockerops.docker_kompose(repc=True)
@@ -192,6 +192,15 @@ def upload_file():
       background-color: rgba(150, 150, 150, .5);
       font-size: 1.5em;
     }
+  button5 {
+      height: 2em;
+      min-width: 3.236em; border-radius: 25em;
+      border-width: 0;
+      color: roba (255, 255,255, .78);
+      background-color: rgba(150, 150, 150, .5);
+      font-size: 1.5em;
+    }
+
 
     </style>
     <title>Upload docker-compose.yml,yaml file</title>
@@ -209,6 +218,13 @@ def upload_file():
     <form method=post action="/kompose/json">
       <input type=submit value="Kompose to JSON">
     </form>
+    <form method=post action="/kompose/helm">
+      <input type=submit value="Kompose to Helm v3">
+    </form>
+    <form method=post action="/kompose/replication">
+      <input type=submit value="Kompose to ReplicationController objects (Defaults to 1 ReplicaSet)">
+    </form>
+
      </body>
     </h1>
 
