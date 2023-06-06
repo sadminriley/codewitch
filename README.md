@@ -111,7 +111,7 @@ The flask_upload.py will not work without the FLASK_USER and FLASK_PASS set. SEC
 
 This allows you to upload a docker-compose file with either .yml or .yaml. Launch the flask_upload.py and upload your file as such -
 
-<img src="https://user-images.githubusercontent.com/25120457/220446355-cbcaecb2-e65a-416d-8fd9-99aa286401a3.png" width="90%"></img> <img src="https://user-images.githubusercontent.com/25120457/220446436-55c73644-1135-4745-95e1-9811c5f5cfe2.png" width="90%"></img>
+<img src="https://github.com/sadminriley/codewitch/assets/25120457/a3e02689-fc18-4d90-8759-1a5d7303ca6e" width="100%"></img>
 
 The comic sans is just for fun :) , of course.
 
