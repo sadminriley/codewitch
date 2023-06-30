@@ -200,6 +200,15 @@ def upload_file():
       background-color: rgba(150, 150, 150, .5);
       font-size: 1.5em;
     }
+  button6 {
+      height: 2em;
+      min-width: 3.236em; border-radius: 25em;
+      border-width: 0;
+      color: roba (255, 255,255, .78);
+      background-color: rgba(150, 150, 150, .5);
+      font-size: 1.5em;
+    }
+
 
 
     </style>
@@ -224,6 +233,10 @@ def upload_file():
     <form method=post action="/kompose/replication">
       <input type=submit value="Kompose to ReplicationController objects (Defaults to 1 ReplicaSet)">
     </form>
+    <form method=post action="/kube/listallpods">
+      <input type=submit value="Kubectl List All Pods">
+    </form>
+
 
      </body>
     </h1>
