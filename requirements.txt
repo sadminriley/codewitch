@@ -31,3 +31,4 @@ typing==3.7.4.3
 websocket-client==1.4.2
 Werkzeug==2.0.3
 yarg==0.1.9
+setuptools>=78.1.1 # not directly required, pinned by Snyk to avoid a vulnerability
